@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin:0;
+        }
+        /*}*/
+        /*html,body{*/
+            /*background: #333;*/
+        /*}*/
+    </style>
+</head>
+<body>
+    //画布
+    <canvas id="colors" width="1500" height="1000"></canvas>
+</body>
+</html>
+<script>
+    let canvas=document.querySelector("#colors");
+    let ctx=canvas.getContext("2d");
+    let arr=[];
+    //圆形类
+    function Circle(x,y,r,color) {
+        this.x=x;
+        this.y=y;
+        this.r=r;
+        //颜色取值范围
+        this.color="rgb("+(parseInt(Math.random()*255))+","+(parseInt(Math.random()*255))+","+(parseInt(Math.random()*255))+")";
+        //随机方向
+        this.dx=Math.random()*10-5;
+        this.dy=Math.random()*10-5;
+        arr.push(this);
+    }
+    //渲染
+    Circle.prototype.render=function () {
+        //新建一个路径
+        ctx.beginPath();
+        //创建一个圆
+        ctx.arc(this.x,this.y,this.r,0,Math.PI*2,true);
+        //设置样式颜色
+        ctx.fillStyle=this.color;
+        //填充路径内容,变成实心圆
+        ctx.fill();
+    };
+    //更新,圆变小,产生偏移
+    Circle.prototype.update=function () {
+        this.x+=this.dx;
+        this.y+=this.dy;
+        this.r--;
+        if(this.r<0){
+            for(let i=0;i<arr.length;i++){
+                if(arr[i]===this){
+                    arr.splice(i,1);
+                }
+            }
+            return false;
+        }
+        return true;
+    };
+    //鼠标移动触发事件
+    canvas.onmousemove=function (e) {
+        new Circle(e.clientX,e.clientY,30,"orange");
+    };
+    //定时器
+    setInterval(function () {
+        //清除画布
+        ctx.clearRect(0,0,1500,1000);
+        for(let i=0;i<arr.length;i++){
+            arr[i].update()&&arr[i].render();
+        }
+    },20)
+</script>

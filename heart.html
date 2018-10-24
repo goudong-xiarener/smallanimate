@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="Keywords" content="">
+		<meta name="Description" content="">
+		<title>3D爱心旋转</title>
+		<style>
+			body{
+				background:#000;
+				
+			}
+			#heart{
+				width:200px;
+				height:300px;
+				margin:100px auto;
+				position:relative;
+				/* perspective: 1800px; */
+				transform-style:preserve-3d;
+				animation:rot 10s linear infinite;
+
+				
+			}
+			/* @Keyframes rot{
+				from{
+					transform:rotateX(0deg) rotateY(0deg);
+				}
+				to{
+					transform:rotateX(360deg) rotateY(360deg);
+				}
+			} */
+			@keyframes rot{
+				from{
+					transform: rotateX(0deg) rotateY(0deg); 
+				}
+				to{
+					transform: rotateX(360deg) rotateY(360deg);
+				}
+			}
+			.heart{
+				position:absolute;
+				top:0;
+				left:0;
+				width:200px;
+				height:300px;
+				border:solid 2px red;
+				border-left:0;
+				border-bottom:0;
+				/* border-radius:50% 50% 0/50% 40% 0;	 */
+				border-radius: 50% 50% 0;
+				/* transform: rotateZ(45deg); */
+				
+			}
+			
+			
+		</style>
+		<script>
+		window.onload=function(){
+			let bg=document.querySelector("#heart");
+
+			for(let i=0;i<36;i++){
+				let div=document.createElement('div');
+				div.classList.add("heart");
+				// div.style.transform=`rotateY(${i*10}deg) rotateZ(45deg) translateX(50px)`;
+				div.style.transform=`rotateY(${i*10}deg) rotateZ(45deg) translateX(50px)`;
+				bg.appendChild(div);
+			}
+
+		}
+		</script>
+	</head>
+	<body>
+		<div id="heart">
+			<!-- <div class="heart"></div> -->
+		</div>
+		
+	</body>
+</html>
